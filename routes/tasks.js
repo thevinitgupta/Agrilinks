@@ -18,6 +18,26 @@ router.get("/",(req,res)=>{
     })
 })
 
+router.delete("/tasks?",(req,res)=>{
+    const taskId = req.query.id;
+    console.log(taskId);
+    Task.findByIdAndDelete(taskId, function (err, docs) {
+        if (err){
+            console.log(err)
+            res.status(500).json({
+                message : "Deletion Error"
+            })
+        }
+        else{
+            console.log("Deleted : ", docs);
+            res.status(200).json({
+                message : "Task Deleted"
+            })
+        }
+    });
+})
+
+
 /**
  * post task body :
  * {
