@@ -18,7 +18,7 @@ router.get("/",(req,res)=>{
     })
 })
 
-router.delete("/tasks?",(req,res)=>{
+router.delete("/delete?",(req,res)=>{
     const taskId = req.query.id;
     console.log(taskId);
     Task.findByIdAndDelete(taskId, function (err, docs) {
@@ -37,6 +37,26 @@ router.delete("/tasks?",(req,res)=>{
     });
 })
 
+
+router.put("/update?",(req,res)=>{
+    const taskId = req.query.id;
+    const fields = req.body;
+    console.log(taskId,fields);
+    
+    Task.findByIdAndUpdate(taskId, fields,(err,originalDoc)=>{
+        if(err){
+            res.status(500).json({
+                message : "Internal Server Error"
+            })
+        }
+        else {
+            console.log(originalDoc)
+            res.status(200).json({
+                message : "Fields Updated!"
+            })
+        }
+    })
+})
 
 /**
  * post task body :
